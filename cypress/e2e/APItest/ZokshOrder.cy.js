@@ -1,7 +1,7 @@
 /// <reference types = "Cypress" />
 
 const { generateRequestAuthHeaders } = require('../../pre-request')
-const order = require('../../fixtures/TestData');
+const order = require('../../fixtures/TestData.json');
 const environments = require('../../environments')
 const {baseurl, apiAuth, versions} = environments.testnet
 
