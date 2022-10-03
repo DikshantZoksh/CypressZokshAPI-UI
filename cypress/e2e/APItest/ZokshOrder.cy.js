@@ -3,12 +3,20 @@
 const { generateRequestAuthHeaders } = require('../../pre-request')
 const order = require('../../fixtures/TestData');
 const environments = require('../../environments')
-const {baseurl, apiAuth, versions} = environments.testnet
+const { baseurl, apiAuth, versions } = environments.testnet
+import {
+    getProfileText,
+    getNameField,
+    getEmailField
+} from '../../support/objectrepo'
 
 let post_Body = JSON.parse(JSON.stringify(order))
 
-let requestapi = {} ;
+let requestapi = {};
 let count = 0;
+let res_url = "";
+
+
 
 describe('Zoksh OrderCreation API Tests', () => {
 
@@ -16,18 +24,17 @@ describe('Zoksh OrderCreation API Tests', () => {
     let zokshts
     let zokshsign
 
+
     beforeEach(() => {
 
         console.log("BeforeEach Hook started :" + count)
         post_Body = JSON.parse(JSON.stringify(order));
-        count = count + 1 ;
-        //console.log("Test Flag " + count)
-    
-          requestapi = {
-          url: '/v2/order',
-          method: 'POST',
-          body: post_Body[count - 1],
-          headers: {}
+        count = count + 1;
+        requestapi = {
+            url: '/v2/order',
+            method: 'POST',
+            body: post_Body[count - 1],
+            headers: {}
         };
 
         let authHeaders = generateRequestAuthHeaders(requestapi, apiAuth, versions);
@@ -37,30 +44,80 @@ describe('Zoksh OrderCreation API Tests', () => {
     })
 
     it('TC-01 : Token - NA : No Specified chain or currency', (done) => {
-      
         cy.request({
-            method : requestapi.method ,
-            url : baseurl + requestapi.url,
-            headers : {
-                'Accept' :  'application/json',
+            method: requestapi.method,
+            url: baseurl + requestapi.url,
+            headers: {
+                'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'zoksh-key':  zokshkey,
+                'zoksh-key': zokshkey,
                 'zoksh-ts': zokshts,
                 'zoksh-sign': zokshsign
             },
-            body : requestapi.body
-        }).then((res)=>{
-              //cy.log(JSON.stringify(res.body))
-              expect(res.status).to.be.equal(200)
-              expect(res.body.orderId).to.be.not.null
-              expect(res.body.url).to.be.not.null
-              let str_ordrId = res.body.orderId
-              //cy.log(str_ordrId)
-              expect(res.body.url).contains(str_ordrId);
-              done();
-              
-        })
-    }).timeout(10000);
-    
+            body: requestapi.body
+        }).then((res) => {
+            expect(res.status).to.be.equal(200)
+            expect(res.body.orderId).to.be.not.null
+            expect(res.body.url).to.be.not.null
+            let str_ordrId = res.body.orderId
+            expect(res.body.url).contains(str_ordrId);
+            done();
+            res_url = res.body.url
+        });
+    });
 
-})
+    it('TC-02 : Token - NA : Prefill - All Blank : No Specified chain or currency', (done) => {
+        cy.request({
+            method: requestapi.method,
+            url: baseurl + requestapi.url,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'zoksh-key': zokshkey,
+                'zoksh-ts': zokshts,
+                'zoksh-sign': zokshsign
+            },
+            body: requestapi.body
+        }).then((res) => {
+            expect(res.status).to.be.equal(200)
+            expect(res.body.orderId).to.be.not.null
+            expect(res.body.url).to.be.not.null
+            let str_ordrId = res.body.orderId
+            expect(res.body.url).contains(str_ordrId);
+            done();
+            res_url = res.body.url
+        });
+    });
+
+    it('TC-03 : Token - NA : Prefill - Phone, Email - Blank : No Specified chain or currency', (done) => {
+        cy.request({
+            method: requestapi.method,
+            url: baseurl + requestapi.url,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'zoksh-key': zokshkey,
+                'zoksh-ts': zokshts,
+                'zoksh-sign': zokshsign
+            },
+            body: requestapi.body
+        }).then((res) => {
+            expect(res.status).to.be.equal(200)
+            expect(res.body.orderId).to.be.not.null
+            expect(res.body.url).to.be.not.null
+            let str_ordrId = res.body.orderId
+            expect(res.body.url).contains(str_ordrId);
+            done();
+            res_url = res.body.url
+        });
+    });
+
+    afterEach(() => {
+        cy.visit(res_url)
+        cy.wait(10000)
+        getProfileText().contains('You are making a payment to') ;
+        getNameField().should('have.value', post_Body[count - 1].prefill.name ) ;
+        getEmailField().should('have.value', post_Body[count - 1].prefill.email);
+    })
+
+});
