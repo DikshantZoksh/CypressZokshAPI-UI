@@ -23,7 +23,7 @@ import {
 
 } from '../../support/objectrepo'
 
-describe("Customers creation and verify the details", () => {
+describe("Validate customer scenarios ", () => {
 
     let usremail = "";
     let firstname = "";
@@ -149,8 +149,8 @@ describe("Customers creation and verify the details", () => {
                                 assert.isTrue(row.length > xrow.length, "Customer with email : " + usremail + " got successfully deleted")
                             }
                         })
-                    })
 
+                    })
                 }
             })
         })

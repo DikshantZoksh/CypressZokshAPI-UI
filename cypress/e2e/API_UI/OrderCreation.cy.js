@@ -18,7 +18,7 @@ let res_url = "";
 
 
 
-describe('Zoksh OrderCreation API Tests', () => {
+describe('OrderCreation API Tests', () => {
 
     let zokshkey
     let zokshts
