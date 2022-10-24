@@ -1,27 +1,12 @@
-[
-{
-    "name":"Test_Automation",
-    "email":"roberttheangel@moopay.live",
-    "address":["",""],
-    "organisation":"Zoksh",
-    "pin":"", 
-    "city":"",
-    "state":"",
-    "country":"",
-    "merchant":"633edf66a1c27043498ca394"  
-},
 
 {
-    "name":"Test_Automation_QA",
-    "email":"lievlife@moopay.live",
+    "name":"Salman",
+    "email":"sallubody@moopay.live",
     "address":["abc","xyz"],
     "organisation":"Zoksh",
-    "pin":"0000", 
-    "city":"Lucknow",
-    "state":"UP",
-    "country":"India",
+    "pin":"0010", 
+    "city":"Wandana",
+    "state":"US",
+    "country":"US",
     "merchant":"633edf66a1c27043498ca394"  
 }
-
-
-]

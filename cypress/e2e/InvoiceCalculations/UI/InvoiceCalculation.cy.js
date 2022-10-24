@@ -1,8 +1,8 @@
 /// <reference types = "Cypress" />
 
-const cred = require('../../fixtures/credentials.json')
-const invoiceval = require('../../fixtures/Invoicecalculation.json')
-const { truncateToDecimals } = require('../../support/lib')
+const cred = require('../../../fixtures/credentials.json')
+const invoiceval = require('../../../fixtures/Invoicecalculation.json')
+const { truncateToDecimals } = require('../../../support/lib')
 
 
 import {
@@ -23,7 +23,7 @@ import {
     getAddItemButton
 
 
-} from '../../support/objectrepo'
+} from '../../../support/objectrepo'
 
 
 

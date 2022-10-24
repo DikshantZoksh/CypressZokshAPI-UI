@@ -7,8 +7,8 @@
     "cy:run": "cypress run --env allure=true --headless",
     "allure:report": "allure generate allure-reports --clean -o allure-reports",
     "test": "npm run cy:run || npm run posttest && npm run launchreport",
-    "posttest" : "npm run allure:report",
-    "launchreport" : "allure serve"
+    "posttest": "npm run allure:report",
+    "launchreport": "allure serve"
   },
   "author": "Dikshant",
   "license": "ISC",

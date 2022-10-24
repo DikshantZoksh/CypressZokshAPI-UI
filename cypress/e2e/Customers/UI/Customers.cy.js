@@ -1,6 +1,6 @@
 /// <reference types = "Cypress" />
 
-const cred = require('../../fixtures/credentials.json')
+const cred = require('../../../fixtures/credentials.json')
 
 import {
     getEmailLogin,
@@ -19,20 +19,24 @@ import {
     getButtonSubmit,
     getProfileButton,
     getLogoutButton,
-    getButtonUpdate
+    getButtonUpdate,
+    getAddressInput
 
-} from '../../support/objectrepo'
+} from '../../../support/objectrepo'
 
 describe("Validate customer scenarios ", () => {
 
     let usremail = "";
     let firstname = "";
     let updatedname = "";
+    let addrss = ""
     let rndx = Math.floor((Math.random() * 100) + 1);
     usremail = "TestQA_" + rndx + "@gmail.com"
     firstname = "RockQA" + rndx
     let Compname = "Zoksh"
     updatedname = "update_" + firstname
+    addrss = "RockQA_zoksh"
+
 
     before(() => {
         cy.visit(cred.app_url)
@@ -59,11 +63,11 @@ describe("Validate customer scenarios ", () => {
         getAddPayeeButton().should('be.visible', true)
         getAddPayeeButton().click({ force: true })
         getEmailField().type(usremail).should('have.value', usremail)
-        getButtonLogin().should('be.enabled', true)
-        getCompanyField().type(Compname).should('have.value', Compname)
+        getFirstNameField().type(firstname).should('have.value', firstname)
+        getButtonSubmit().should('be.enabled', true)
         getMoredetailsButton().should('be.visible', true)
         getMoredetailsButton().click({ force: true })
-        getFirstNameField().type(firstname).should('have.value', firstname)
+        getAddressInput().type(addrss).should('have.value', addrss)
         getButtonSubmit().should('be.enabled', true)
         getButtonSubmit().click({ force: true })
         getCustomerListTable().should('be.visible', true)
@@ -96,7 +100,7 @@ describe("Validate customer scenarios ", () => {
             row.toArray().forEach((element) => {
                 if (element.innerHTML.includes(usremail)) {
                     cy.log('Row index for the searched item - ' + row.index(element))
-                    const updatebtn = getCustomerListTable().find('tr').eq(row.index(element)).find('td').eq(4).find("button[aria-label='Edit Payee']")
+                    const updatebtn = getCustomerListTable().find('tr').eq(row.index(element)).find('td').eq(3).find("button[aria-label='Edit Payee']")
                     updatebtn.click({ force: true })
                     getMoredetailsButton().should('be.visible', true)
                     getMoredetailsButton().click({ force: true })
@@ -136,7 +140,7 @@ describe("Validate customer scenarios ", () => {
             row.toArray().forEach((element) => {
                 if (element.innerHTML.includes(usremail)) {
                     cy.log('Row index for the deleted item - ' + row.index(element))
-                    const deletebtn = getCustomerListTable().find('tr').eq(row.index(element)).find('td').eq(4).find("button[aria-label='Delete Payee']")
+                    const deletebtn = getCustomerListTable().find('tr').eq(row.index(element)).find('td').eq(3).find("button[aria-label='Delete Payee']")
                     deletebtn.click({ force: true })
                     cy.wait(2000)
                     getCustomerListTable().should('be.visible', true)
