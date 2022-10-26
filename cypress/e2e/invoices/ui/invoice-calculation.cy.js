@@ -1,7 +1,8 @@
 /// <reference types = "Cypress" />
 
-const cred = require('../../../fixtures/credentials.json');
-const invoiceval = require('../../../fixtures/Invoicecalculation.json');
+const cred = require('./test-data/credentials.test-data');
+const invoiceval = require('./test-data/invoice-calculation.test-data');
+
 const { truncateToDecimals } = require('../../../support/lib');
 
 import {
@@ -19,7 +20,7 @@ import {
   getTaxAmount,
   getTotalAmount,
   getAddItemButton,
-} from '../../../support/objectrepo';
+} from '../../../support/object-repo';
 
 describe("Validate Amount and Tax for multiple scenario's", () => {
   let count = 0;
@@ -46,6 +47,7 @@ describe("Validate Amount and Tax for multiple scenario's", () => {
     cy.wait(2000);
     cy.get('h1').contains('Create Invoice');
     getcurrencydropdown().click({ force: true });
+
     cy.get('li')
       .contains(invoiceval[count - 1].Currency)
       .click({ force: true });
@@ -65,18 +67,26 @@ describe("Validate Amount and Tax for multiple scenario's", () => {
     gettaxpercent()
       .type(invoiceval[count - 1].tax)
       .should('have.value', invoiceval[count - 1].tax);
+
     cy.log('Tax %  : ' + invoiceval[count - 1].tax);
     cy.log('Quanity : ' + invoiceval[count - 1].Qty);
     cy.log('Unit Price : ' + invoiceval[count - 1].unitprice);
+
     let amount_withoutTax = invoiceval[count - 1].Qty * invoiceval[count - 1].unitprice;
     amount_withoutTax = truncateToDecimals(amount_withoutTax);
+
     cy.log('Amount without Tax : ' + amount_withoutTax);
+
     let tax_amount = (invoiceval[count - 1].tax / 100) * amount_withoutTax;
     tax_amount = truncateToDecimals(tax_amount);
+
     cy.log('Tax amount : ' + tax_amount);
+
     let total_amount = amount_withoutTax + tax_amount;
     total_amount = truncateToDecimals(total_amount);
+
     cy.log('Total Amount : ' + total_amount);
+
     getAmtwithoutTax().should('have.value', amount_withoutTax);
     getTaxAmount().should('have.value', tax_amount);
     getTotalAmount().should('have.value', total_amount);

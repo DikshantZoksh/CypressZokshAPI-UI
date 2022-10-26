@@ -1,10 +1,10 @@
 /// <reference types = "Cypress" />
 
 const { generateRequestAuthHeaders } = require('../../../pre-request');
-const order = require('../../../fixtures/OrderpayloadData.json');
+const order = require('./test-data/order-payload.test-data');
 const environments = require('../../../environments');
 const { baseurl, apiAuth, versions } = environments.testnet;
-import { getProfileText, getNameField, getEmailField } from '../../../support/objectrepo';
+import { getProfileText, getNameField, getEmailField } from '../../../support/object-repo';
 
 let post_Body = JSON.parse(JSON.stringify(order));
 

@@ -1,6 +1,6 @@
 /// <reference types = "Cypress" />
 
-const cred = require('../../../fixtures/credentials.json');
+const cred = require('./test-data/credentials.test-data');
 
 import {
   getEmailLogin,
@@ -21,7 +21,7 @@ import {
   getLogoutButton,
   getButtonUpdate,
   getAddressInput,
-} from '../../../support/objectrepo';
+} from '../../../support/object-repo';
 
 describe('Validate customer scenarios ', () => {
   let usremail = '';
