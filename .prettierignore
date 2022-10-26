@@ -1,0 +1,9 @@
+# Add files here to ignore them from prettier formatting
+node_modules/
+node_modules/
+ui-app/
+logs/
+*.min.*
+*.map
+public/vendor
+*.json
