@@ -221,6 +221,7 @@ describe('OrderCreation API Tests', () => {
   afterEach(() => {
     cy.visit(res_url);
     cy.wait(10000);
+
     getProfileText().contains('You are making a payment to');
     getNameField().should('have.value', post_Body[count - 1].prefill.name);
     getEmailField().should('have.value', post_Body[count - 1].prefill.email);
