@@ -1,4 +1,4 @@
-/// <reference types = "Cypress" />
+// <reference types = "Cypress" />
 
 const { generateRequestAuthHeaders } = require('../../../pre-request');
 const environments = require('../../../environments');
