@@ -1,6 +1,6 @@
 /// <reference types = "Cypress" />
 
-const cred = require('./test-data/credentials');
+const cred = require('./test-data/credentials.test-data');
 
 import {
   getEmailLogin,
@@ -54,7 +54,6 @@ describe('Validate customer scenarios ', () => {
     cy.wait(2000);
     cy.get('h1').contains('Create Invoice');
     getSelectPayeeButton().click({ force: true });
-    getCustomerListTable().should('be.visible', true);
     getAddPayeeButton().should('be.visible', true);
     getAddPayeeButton().click({ force: true });
     getEmailField().type(usremail).should('have.value', usremail);
@@ -65,7 +64,6 @@ describe('Validate customer scenarios ', () => {
     getAddressInput().type(addrss).should('have.value', addrss);
     getButtonSubmit().should('be.enabled', true);
     getButtonSubmit().click({ force: true });
-    getCustomerListTable().should('be.visible', true);
     getCustomerListTable()
       .find('tr')
       .then((row) => {
@@ -96,7 +94,6 @@ describe('Validate customer scenarios ', () => {
     cy.wait(2000);
     cy.get('h1').contains('Create Invoice');
     getSelectPayeeButton().click({ force: true });
-    getCustomerListTable().should('be.visible', true);
     getCustomerListTable()
       .find('tr')
       .then((row) => {
@@ -117,7 +114,6 @@ describe('Validate customer scenarios ', () => {
             getFirstNameField().type(updatedname).should('have.value', updatedname);
             getButtonUpdate().should('be.enabled', true);
             getButtonUpdate().click({ force: true });
-            getCustomerListTable().should('be.visible', true);
             getCustomerListTable()
               .find('tr')
               .then((nrow) => {
@@ -150,7 +146,6 @@ describe('Validate customer scenarios ', () => {
     cy.wait(2000);
     cy.get('h1').contains('Create Invoice');
     getSelectPayeeButton().click({ force: true });
-    getCustomerListTable().should('be.visible', true);
     getCustomerListTable()
       .find('tr')
       .then((row) => {
@@ -166,7 +161,6 @@ describe('Validate customer scenarios ', () => {
               .find("button[aria-label='Delete Payee']");
             deletebtn.click({ force: true });
             cy.wait(2000);
-            getCustomerListTable().should('be.visible', true);
             getCustomerListTable()
               .find('tr')
               .then((xrow) => {
