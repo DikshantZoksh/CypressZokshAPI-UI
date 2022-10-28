@@ -1,6 +1,6 @@
 /// <reference types = "Cypress" />
 
-const cred = require('./test-data/credentials.test-data');
+const cred = require('./test-data/credentials');
 
 import {
   getEmailLogin,

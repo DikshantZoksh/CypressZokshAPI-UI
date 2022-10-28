@@ -1,7 +1,7 @@
 /// <reference types = "Cypress" />
 
 const cred = require('./test-data/credentials.test-data');
-const invoiceval = require('./test-data/invoice-calculation.test-data');
+const invoiceval = require('./test-data/invoice-calculation');
 
 const { truncateToDecimals } = require('../../../support/lib');
 

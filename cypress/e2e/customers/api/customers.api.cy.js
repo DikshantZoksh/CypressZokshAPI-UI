@@ -2,7 +2,7 @@
 
 const { generateRequestAuthHeaders } = require('../../../pre-request');
 const environments = require('../../../environments');
-const cust = require('./test-data/customer.test-data');
+const cust = require('./test-data/customer');
 const { apiAuth, versions, custAPIurl, custAPIep, bearerToken } = environments.testnet;
 
 let post_Body = JSON.parse(JSON.stringify(cust));
