@@ -10,6 +10,6 @@
 
 ### Naming
 
-1. Folder/File names should be in `kebab-case-with-small-case`.
-2. Variables or local constants names should be in `camelCase`.
-3. Module level constants should be in `CAPITAL_CASE_WITH_UNDERSCORES`.
+1. **Folder/File** names should be in `kebab-case-with-small-case`.
+2. **Variables or local constants** names should be in `camelCaseWithFirstLetterSmallCase`.
+3. **Module level constants** should be in `CAPITAL_CASE_WITH_UNDERSCORES`.
