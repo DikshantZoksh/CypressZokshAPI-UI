@@ -106,4 +106,39 @@ describe('Customer API Tests', () => {
       done();
     });
   }).timeout(10000);
+
+  it('TC-03 : Read All : Fetch the created Customer and verify the details in response ', (done) => {
+    cy.request({
+      method: 'GET',
+      url: custAPIurl + custAPIep,
+      headers: {
+        Authorization: 'Bearer ' + bearerToken,
+        Accept: 'application/json',
+        'Content-Type' : 'application/json'
+      },
+    }).then((res) => {
+      expect(res.status).to.be.equal(200);
+      expect(res.body.success).to.be.equal(true);
+      let cust_count = res.body.data.customers.length
+      let i = 0;
+      cy.log("length of the customers : " +cust_count )
+      for (i=0 ; i<cust_count ; i++) {
+        if(res.body.data.customers[i]._id == Cust_id ) {
+          cy.log("Customer identified at index : " +i )
+          expect(res.body.data.customers[i]._id).to.be.equal(Cust_id);
+          expect(res.body.data.customers[i].name).to.be.equal(Cust_name);
+          expect(res.body.data.customers[i].email).to.be.equal(cust_email);
+          expect(res.body.data.customers[i].address[0]).to.be.equal(addrs_0);
+          expect(res.body.data.customers[i].address[1]).to.be.equal(addrs_1);
+          expect(res.body.data.customers[i].organisation).to.be.equal(cust_org);
+          expect(res.body.data.customers[i].pin).to.be.equal(cust_pin);
+          expect(res.body.data.customers[i].city).to.be.equal(cust_city);
+          expect(res.body.data.customers[i].state).to.be.equal(cust_state);
+          expect(res.body.data.customers[i].country).to.be.equal(cust_country);
+          expect(res.body.data.customers[i].merchant).to.be.equal(cust_merchant);
+        }
+      }
+      done();
+    });
+  }).timeout(10000);
 });
