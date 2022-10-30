@@ -23,7 +23,7 @@ import {
   getAddressInput,
 } from '../../../support/object-repo';
 
-describe('Validate customer scenarios ', () => {
+describe('Customers UI tests ', () => {
   let usremail = '';
   let firstname = '';
   let updatedname = '';
@@ -180,8 +180,7 @@ describe('Validate customer scenarios ', () => {
         });
       });
   });
-
-  after(() => {
+    after(() => {
     getProfileButton().click({ force: true });
     getLogoutButton().click({ force: true });
     cy.url().should('include', '/auth');

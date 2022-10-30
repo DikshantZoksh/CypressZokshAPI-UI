@@ -1,7 +1,7 @@
 module.exports = {
 
-  name: 'Salman',
-  email: 'vijhgasjha@moopay.live',
+  name: 'Modi_KN',
+  email: 'RockIndia@moopay.live',
   address: ['abc', 'xyz'],
   organisation: 'Zoksh',
   pin: '0010',

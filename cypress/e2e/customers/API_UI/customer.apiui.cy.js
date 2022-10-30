@@ -10,9 +10,6 @@ let post_Body = JSON.parse(JSON.stringify(cust));
 
 let requestapi = {};
 
-let Cust_name = ''  ;
-let cust_email = '' ;
-
 import {
   getEmailLogin,
   getPasswordLogin,
@@ -58,9 +55,7 @@ describe('Customer creation through API and validate on UI', () => {
       expect(res.body.success).to.be.equal(true);
       expect(res.body.data.customer._id).to.be.not.null;
       expect(res.body.data.customer.name).to.be.equal(post_Body.name);
-      Cust_name = res.body.data.customer.name;
       expect(res.body.data.customer.email).to.be.equal(post_Body.email);
-      cust_email = res.body.data.customer.email;
       expect(res.body.data.customer.address[0]).to.be.equal(post_Body.address[0]);
       expect(res.body.data.customer.address[1]).to.be.equal(post_Body.address[1]);
       expect(res.body.data.customer.organisation).to.be.equal(post_Body.organisation);
@@ -74,7 +69,7 @@ describe('Customer creation through API and validate on UI', () => {
   }).timeout(10000);
 
   it('TC02 : UI : Verify the customer details on UI created through API', () => {
-    cy.log("Email : - " + cust_email + " will be serached in UI")
+    cy.log("Email : - " + post_Body.email + " will be serached in UI")
     cy.visit(cred.app_url)
     getEmailLogin().type(cred.username).should('have.value', cred.username);
     getPasswordLogin().type(cred.password).should('have.value', cred.password);
@@ -87,12 +82,13 @@ describe('Customer creation through API and validate on UI', () => {
     cy.wait(2000);
     cy.get('h1').contains('Create Invoice');
     getSelectPayeeButton().click({ force: true });
+    cy.wait(3000)
     getCustomerListTable()
       .find('tr')
       .then((row) => {
         cy.log("Total number of Rows are " + row.length);
         row.toArray().forEach((element) => {
-          if (element.innerHTML.includes(cust_email)) {
+          if (element.innerHTML.includes(post_Body.email)) {
             cy.log("Email found at row index - " + row.index(element));
             getCustomerListTable()
               .find('tr')
@@ -101,7 +97,7 @@ describe('Customer creation through API and validate on UI', () => {
               .eq(0)
               .then(function (col) {
                 const strname = col.text();
-                expect(strname).to.contains(Cust_name);
+                expect(strname).to.contains(post_Body.name);
                 getCloseButton().click({ force: true });
               });
           }
