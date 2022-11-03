@@ -36,3 +36,9 @@ export const getAmtwithoutTax = () => cy.get('input[name="invoiceTotal.totalAmou
 export const getTaxAmount = () => cy.get('input[name="invoiceTotal.totalTaxAmount"]');
 export const getTotalAmount = () => cy.get('input[name="invoiceTotal.totalAmount"]');
 export const getAddItemButton = () => cy.get('div.MuiBox-root.css-uewl2b').find("button[tabindex='0']");
+
+//Object from Invoice 
+export const getGenerateInvoiceButton = () => cy.get('button').contains('Generate Invoice');
+export const getdateIssuedOn = () => cy.get('input[placeholder="dd/mm/yyyy"]').eq(0);
+export const getdatePaymentdueBy = () => cy.get('input[placeholder="dd/mm/yyyy"]').eq(1);
+

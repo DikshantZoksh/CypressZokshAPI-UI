@@ -141,5 +141,4 @@ describe('Customer API Tests', () => {
       done();
     });
   }).timeout(10000);
-  
 });

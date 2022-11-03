@@ -180,9 +180,12 @@ describe('Customers UI tests ', () => {
         });
       });
   });
+
     after(() => {
+    cy.log("After hook started ")
     getProfileButton().click({ force: true });
     getLogoutButton().click({ force: true });
     cy.url().should('include', '/auth');
   });
+
 });

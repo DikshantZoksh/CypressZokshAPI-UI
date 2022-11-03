@@ -1,7 +1,7 @@
 module.exports = {
 
   name: 'Modi_KN',
-  email: 'RockIndia@moopay.live',
+  email: 'RockIndia',
   address: ['abc', 'xyz'],
   organisation: 'Zoksh',
   pin: '0010',
@@ -9,4 +9,5 @@ module.exports = {
   state: 'US',
   country: 'US',
   merchant: '633edf66a1c27043498ca394',
+
 };

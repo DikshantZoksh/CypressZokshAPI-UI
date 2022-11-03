@@ -67,8 +67,9 @@ describe('Customer creation through API and validate on UI', () => {
       done();
     });
   }).timeout(10000);
+  
 
-  it('TC02 : UI : Verify the customer details on UI created through API', () => {
+  it('TC-02 : UI : Verify the customer details on UI created through API', () => {
     cy.log("Email : - " + post_Body.email + " will be serached in UI")
     cy.visit(cred.app_url)
     getEmailLogin().type(cred.username).should('have.value', cred.username);
