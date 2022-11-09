@@ -1,9 +1,9 @@
-// <reference types = "Cypress" />
+/// <reference types = "Cypress" />
 
-const { generateRequestAuthHeaders } = require('../../../pre-request');
-const environments = require('./env/customer.env');
-const cust = require('./test-data/customercreation.test-data');
-const cred = require('./test-data/credentials.test-data');
+const { generateRequestAuthHeaders } = require('../../../../pre-request');
+const environments = require('../env/customer.env');
+const cust = require('../test-data/customercreation.test-data');
+const cred = require('../test-data/credentials.test-data');
 const { apiAuth, versions, custAPIurl, custAPIep, bearerToken } = environments ;
 
 let post_Body = JSON.parse(JSON.stringify(cust));
@@ -19,7 +19,7 @@ import {
   getSelectPayeeButton,
   getCustomerListTable,
   getCloseButton,
-} from '../../../support/object-repo';
+} from '../../../../support/object-repo';
 
 describe('Customer creation through API and validate on UI', () => {
   let zokshkey;
@@ -66,7 +66,7 @@ describe('Customer creation through API and validate on UI', () => {
       expect(res.body.data.customer.merchant).to.be.equal(post_Body.merchant);
       done();
     });
-  }).timeout(10000);
+  }).timeout(20000);
   
 
   it('TC-02 : UI : Verify the customer details on UI created through API', () => {

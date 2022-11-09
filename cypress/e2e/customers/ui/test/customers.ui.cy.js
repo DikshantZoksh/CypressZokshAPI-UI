@@ -1,6 +1,6 @@
 /// <reference types = "Cypress" />
 
-const cred = require('./test-data/credentials.test-data');
+const cred = require('../test-data/credentials.test-data');
 
 import {
   getEmailLogin,
@@ -21,7 +21,7 @@ import {
   getLogoutButton,
   getButtonUpdate,
   getAddressInput,
-} from '../../../support/object-repo';
+} from '../../../../support/object-repo';
 
 describe('Customers UI tests ', () => {
   let usremail = '';

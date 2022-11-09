@@ -3,6 +3,12 @@
 const cred = require('../ui/test-data/credentials.test-data');
 const invoice = require('../ui/test-data/invoice.create.test-data')
 const { truncateToDecimals } = require('../../../support/lib');
+let creation_dt_txt = ""
+let invoice_number = 0
+let client_name_txt = ""
+let invoice_sts = ""
+let invoice_amount = 0
+
 
 import {
   getEmailLogin,
@@ -113,6 +119,82 @@ export function CheckforPayeeExist(){
     getTaxAmount().should('have.value', tax_amount);
     getTotalAmount().should('have.value', total_amount); 
 
+  }
+
+  //View the last created invoice from the table
+  export function viewlastcreatedinvoice(){
+    cy.get("Table[role='table']")
+      .find('tr')
+      .eq(1)
+      .find('td')
+      .eq(5)
+      .find('a').click({ force: true })
+  }  
+
+// Get creation date from the last created invoice on the invoice table
+  export function getCreationDate(){
+    cy.get("Table[role='table']")
+      .find('tr')
+      .eq(1)
+      .find('td')
+      .eq(0)
+      .then(($btn) => {
+        creation_dt_txt = $btn.text()
+        cy.log("creation date is : " + creation_dt_txt)
+      })
+    return creation_dt_txt
+  }
+//
+  export function getinvoicenumber(){
+    cy.get("Table[role='table']")
+      .find('tr')
+      .eq(1)
+      .find('td')
+      .eq(1)
+      .then(($btn) => {
+        invoice_number = $btn.text()
+        cy.log("invoice number is : " + invoice_number)
+      })
+    return invoice_number
+  }
+
+  export function getClientname(){
+    cy.get("Table[role='table']")
+      .find('tr')
+      .eq(1)
+      .find('td')
+      .eq(2)
+      .then(($btn) => {
+        client_name_txt = $btn.text()
+        cy.log("Client name  is : " + client_name_txt)
+      })
+    return client_name_txt
+  }
+
+  export function getinvoicestatus(){
+    cy.get("Table[role='table']")
+      .find('tr')
+      .eq(1)
+      .find('td')
+      .eq(3)
+      .then(($btn) => {
+        invoice_sts = $btn.text()
+        cy.log("Invoice  status is : " + invoice_sts)
+      })
+    return invoice_sts
+  }
+
+  export function getinvoiceAmount(){
+    cy.get("Table[role='table']")
+      .find('tr')
+      .eq(1)
+      .find('td')
+      .eq(4)
+      .then(($btn) => {
+        invoice_amount = $btn.text()
+        cy.log("Invoice amount is : " + invoice_amount)
+      })
+    return invoice_amount
   }
 
 

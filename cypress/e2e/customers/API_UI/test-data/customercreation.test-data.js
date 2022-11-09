@@ -1,7 +1,7 @@
 module.exports = {
 
-  name: 'Shahrukh',
-  email: 'Shahrukhthegreat@gmail.com',
+  name: 'Salman',
+  email: 'Salmanbeingxhuman@gmail.com',
   address: ['abc', 'xyz'],
   organisation: 'Zoksh',
   pin: '0010',

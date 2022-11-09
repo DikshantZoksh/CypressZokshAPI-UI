@@ -1,9 +1,9 @@
 /// <reference types = "Cypress" />
 
-const cred = require('./test-data/credentials.test-data');
-const invoiceval = require('./test-data/invoice-calculation.test-data');
+const cred = require('../test-data/credentials.test-data');
+const invoiceval = require('../test-data/invoice-calculation.test-data');
 
-const { truncateToDecimals } = require('../../../support/lib');
+const { truncateToDecimals } = require('../../../../support/lib');
 
 import {
   getEmailLogin,
@@ -20,7 +20,7 @@ import {
   getTaxAmount,
   getTotalAmount,
   getAddItemButton,
-} from '../../../support/object-repo';
+} from '../../../../support/object-repo';
 
 describe("Validate Amount and Tax for multiple scenario's", () => {
   let count = 0;
