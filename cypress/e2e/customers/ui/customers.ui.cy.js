@@ -186,6 +186,7 @@ describe('Customers UI tests ', () => {
     getProfileButton().click({ force: true });
     getLogoutButton().click({ force: true });
     cy.url().should('include', '/auth');
+    
   });
 
 });
