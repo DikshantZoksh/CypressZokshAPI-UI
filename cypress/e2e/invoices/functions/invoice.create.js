@@ -8,6 +8,7 @@ let invoice_number = 0
 let client_name_txt = ""
 let invoice_sts = ""
 let invoice_amount = 0
+let cust_email = ""
 
 
 import {
@@ -32,6 +33,21 @@ import {
 } from '../../../support/object-repo';
 
 
+//Get customer email from the customer table 
+export function getCustomerEmail(){
+  getCustomerListTable()
+    .find('tr')
+    .eq(1)
+    .find('td')
+    .eq(1)
+    .then(($el) => {
+      cust_email = $el.text()
+      cy.log("Customer Email is : " + cust_email)
+    })
+  return cust_email
+}
+
+
 
 // Check if any payee exist in the payee information table
 export function CheckforPayeeExist(){
@@ -48,10 +64,8 @@ export function CheckforPayeeExist(){
     let row_count = row.length
     if(row_count >= 2) {
       return true
-      assert(row_count >= 2,"Payee exist in the customer table")
     }else{
       return false
-      assert(row_count >= 2,"Customer table is Empty")
     }
   });
 }
@@ -144,7 +158,8 @@ export function CheckforPayeeExist(){
       })
     return creation_dt_txt
   }
-//
+
+//Get invoice number from the last created invoice on the invoice table
   export function getinvoicenumber(){
     cy.get("Table[role='table']")
       .find('tr')
@@ -158,6 +173,7 @@ export function CheckforPayeeExist(){
     return invoice_number
   }
 
+  //Get client name from the last created invoice on the invoice table
   export function getClientname(){
     cy.get("Table[role='table']")
       .find('tr')
@@ -171,6 +187,7 @@ export function CheckforPayeeExist(){
     return client_name_txt
   }
 
+  //Get invoice status from the last created invoice on the invoice table
   export function getinvoicestatus(){
     cy.get("Table[role='table']")
       .find('tr')
@@ -184,6 +201,7 @@ export function CheckforPayeeExist(){
     return invoice_sts
   }
 
+  //Get invoice amount from the last created invoice on the invoice table
   export function getinvoiceAmount(){
     cy.get("Table[role='table']")
       .find('tr')
