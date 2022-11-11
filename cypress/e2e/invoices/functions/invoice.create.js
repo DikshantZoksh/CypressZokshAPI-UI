@@ -4,11 +4,12 @@ const cred = require('../ui/test-data/credentials.test-data');
 const invoice = require('../ui/test-data/invoice.create.test-data')
 const { truncateToDecimals } = require('../../../support/lib');
 let creation_dt_txt = ""
-let invoice_number = 0
+//let invoice_number = ""
 let client_name_txt = ""
 let invoice_sts = ""
-let invoice_amount = 0
+let invoice_amount = ""
 let cust_email = ""
+let val = ""
 
 
 import {
@@ -167,10 +168,10 @@ export function CheckforPayeeExist(){
       .find('td')
       .eq(1)
       .then(($btn) => {
-        invoice_number = $btn.text()
-        cy.log("invoice number is : " + invoice_number)
+        //cy.log("invoice number is : " + $btn.text())
+        const val = $btn.text()
+        return val        
       })
-    return invoice_number
   }
 
   //Get client name from the last created invoice on the invoice table
@@ -201,7 +202,7 @@ export function CheckforPayeeExist(){
     return invoice_sts
   }
 
-  //Get invoice amount from the last created invoice on the invoice table
+  //Get invoice amount date from the last created invoice on the invoice table
   export function getinvoiceAmount(){
     cy.get("Table[role='table']")
       .find('tr')

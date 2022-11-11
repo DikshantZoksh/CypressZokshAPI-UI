@@ -3,13 +3,14 @@
 const cred = require('../test-data/credentials.test-data');
 const invoice = require('../test-data/invoice.create.test-data')
 const { truncateToDecimals } = require('../../../../support/lib');
+const invoicefun = require('../../functions/invoice.create')
 
 let customer_email = ""
 let creation_txt = ""
-let invoice_no = 0
+//let invoice_no = ""
 let client_name = ""
 let status_txt = ""
-let amount_val = 0
+let amount_val = null
 
 
 import { Logindashboard } from '../../functions/invoice.create';
@@ -52,7 +53,9 @@ describe("Create and view the invoice", () => {
     const invoice_tbl = cy.get("Table[role='table']")
     if (invoice_tbl.should('exist')){
        creation_txt = getCreationDate()
-       invoice_no = getinvoicenumber()
+       cy.log(creation_txt)
+       cy.log(getinvoicenumber())
+       //cy.log("Invoice number fetched from table :" +invoice_no)
        client_name = getClientname()
        status_txt = getinvoicestatus()
        amount_val = getinvoiceAmount()
@@ -66,7 +69,7 @@ describe("Create and view the invoice", () => {
   it('Invoice validation ',() => {
     cy.wait(5000)
     cy.url().should('include','/read')
-    getinvoicenum().should('have.text',)
+    getinvoicenum().should('have.text',invoice_no)
     
   })
 
