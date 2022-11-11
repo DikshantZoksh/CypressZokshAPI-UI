@@ -39,3 +39,11 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Reports
+/allure-reports
+/allure-results
+
+# Videos
+/cypress/videos
+/cypress/screenshots
