@@ -1,11 +1,11 @@
-
 const crypto = require('crypto');
 
 function generateRequestAuthHeaders(requestapi, apiAuth, versions) {
-  // TODO FIXME cover other methds as well
-  let postBodyJson = '{}'
+  let postBodyJson = '{}';
   if (requestapi.method === 'POST' || requestapi.method === 'PUT') {
     postBodyJson = JSON.stringify(requestapi.body);
+  } else {
+    return {};
   }
 
   const timestamp = new Date().getTime().toString();
@@ -19,7 +19,7 @@ function generateRequestAuthHeaders(requestapi, apiAuth, versions) {
   const hmac = crypto.createHmac('sha256', apiAuth.secret);
   const signature = hmac.update(toSignBody).digest('hex');
 
-  headers['zoksh-key'] = apiAuth.key
+  headers['zoksh-key'] = apiAuth.key;
   headers['zoksh-ts'] = timestamp;
   headers['zoksh-sign'] = signature;
 

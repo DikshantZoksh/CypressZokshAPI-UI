@@ -1,4 +1,4 @@
-/// <reference types = "Cypress" />
+// <reference types = "Cypress" />
 
 const cred = require('../test-data/credentials.test-data');
 const invoiceval = require('../test-data/invoice-calculation.test-data');
@@ -11,11 +11,11 @@ import {
   getButtonLogin,
   getInvoiceLink,
   getCreateInvoiceButton,
-  getcurrencydropdown,
+  getCurrencyDropdown,
   getDescriptioninput,
   getQuantity,
-  getunitprice,
-  gettaxpercent,
+  getUnitPrice,
+  getTaxPercent,
   getAmtwithoutTax,
   getTaxAmount,
   getTotalAmount,
@@ -28,6 +28,7 @@ describe("Validate Amount and Tax for multiple scenario's", () => {
   before(() => {
     cy.log(invoiceval.length);
     cy.visit(cred.app_url);
+
     getEmailLogin().type(cred.username).should('have.value', cred.username);
     getPasswordLogin().type(cred.password).should('have.value', cred.password);
     getButtonLogin().click();
@@ -46,7 +47,7 @@ describe("Validate Amount and Tax for multiple scenario's", () => {
     cy.url().should('include', '/invoices/create');
     cy.wait(2000);
     cy.get('h1').contains('Create Invoice');
-    getcurrencydropdown().click({ force: true });
+    getCurrencyDropdown().click({ force: true });
 
     cy.get('li')
       .contains(invoiceval[count - 1].Currency)
@@ -59,12 +60,12 @@ describe("Validate Amount and Tax for multiple scenario's", () => {
     getQuantity()
       .type(invoiceval[count - 1].Qty)
       .should('have.value', invoiceval[count - 1].Qty);
-    getunitprice().clear();
-    getunitprice()
+    getUnitPrice().clear();
+    getUnitPrice()
       .type(invoiceval[count - 1].unitprice)
       .should('have.value', invoiceval[count - 1].unitprice);
-    gettaxpercent().clear();
-    gettaxpercent()
+    getTaxPercent().clear();
+    getTaxPercent()
       .type(invoiceval[count - 1].tax)
       .should('have.value', invoiceval[count - 1].tax);
 
@@ -99,7 +100,7 @@ describe("Validate Amount and Tax for multiple scenario's", () => {
     cy.url().should('include', '/invoices/create');
     cy.wait(2000);
     cy.get('h1').contains('Create Invoice');
-    getcurrencydropdown().click({ force: true });
+    getCurrencyDropdown().click({ force: true });
     cy.get('li')
       .contains(invoiceval[count - 1].Currency)
       .click({ force: true });
@@ -111,12 +112,12 @@ describe("Validate Amount and Tax for multiple scenario's", () => {
     getQuantity()
       .type(invoiceval[count - 1].Qty)
       .should('have.value', invoiceval[count - 1].Qty);
-    getunitprice().clear();
-    getunitprice()
+    getUnitPrice().clear();
+    getUnitPrice()
       .type(invoiceval[count - 1].unitprice)
       .should('have.value', invoiceval[count - 1].unitprice);
-    gettaxpercent().clear();
-    gettaxpercent()
+    getTaxPercent().clear();
+    getTaxPercent()
       .type(invoiceval[count - 1].tax)
       .should('have.value', invoiceval[count - 1].tax);
     cy.log('Tax %  : ' + invoiceval[count - 1].tax);
@@ -143,7 +144,7 @@ describe("Validate Amount and Tax for multiple scenario's", () => {
     cy.url().should('include', '/invoices/create');
     cy.wait(2000);
     cy.get('h1').contains('Create Invoice');
-    getcurrencydropdown().click({ force: true });
+    getCurrencyDropdown().click({ force: true });
     cy.get('li')
       .contains(invoiceval[count - 1].Currency)
       .click({ force: true });
@@ -155,12 +156,12 @@ describe("Validate Amount and Tax for multiple scenario's", () => {
     getQuantity()
       .type(invoiceval[count - 1].Qty)
       .should('have.value', invoiceval[count - 1].Qty);
-    getunitprice().clear();
-    getunitprice()
+    getUnitPrice().clear();
+    getUnitPrice()
       .type(invoiceval[count - 1].unitprice)
       .should('have.value', invoiceval[count - 1].unitprice);
-    gettaxpercent().clear();
-    gettaxpercent()
+    getTaxPercent().clear();
+    getTaxPercent()
       .type(invoiceval[count - 1].tax)
       .should('have.value', invoiceval[count - 1].tax);
     cy.log('Tax %  : ' + invoiceval[count - 1].tax);
@@ -187,7 +188,7 @@ describe("Validate Amount and Tax for multiple scenario's", () => {
     cy.url().should('include', '/invoices/create');
     cy.wait(2000);
     cy.get('h1').contains('Create Invoice');
-    getcurrencydropdown().click({ force: true });
+    getCurrencyDropdown().click({ force: true });
     cy.get('li')
       .contains(invoiceval[count - 1].Currency)
       .click({ force: true });
@@ -199,12 +200,12 @@ describe("Validate Amount and Tax for multiple scenario's", () => {
     getQuantity()
       .type(invoiceval[count - 1].Qty)
       .should('have.value', invoiceval[count - 1].Qty);
-    getunitprice().clear();
-    getunitprice()
+    getUnitPrice().clear();
+    getUnitPrice()
       .type(invoiceval[count - 1].unitprice)
       .should('have.value', invoiceval[count - 1].unitprice);
-    gettaxpercent().clear();
-    gettaxpercent()
+    getTaxPercent().clear();
+    getTaxPercent()
       .type(invoiceval[count - 1].tax)
       .should('have.value', invoiceval[count - 1].tax);
     cy.log('Tax %  : ' + invoiceval[count - 1].tax);
@@ -231,7 +232,7 @@ describe("Validate Amount and Tax for multiple scenario's", () => {
     cy.url().should('include', '/invoices/create');
     cy.wait(2000);
     cy.get('h1').contains('Create Invoice');
-    getcurrencydropdown().click({ force: true });
+    getCurrencyDropdown().click({ force: true });
     cy.get('li')
       .contains(invoiceval[count - 1].Currency)
       .click({ force: true });
@@ -243,12 +244,12 @@ describe("Validate Amount and Tax for multiple scenario's", () => {
     getQuantity()
       .type(invoiceval[count - 1].Qty)
       .should('have.value', invoiceval[count - 1].Qty);
-    getunitprice().clear();
-    getunitprice()
+    getUnitPrice().clear();
+    getUnitPrice()
       .type(invoiceval[count - 1].unitprice)
       .should('have.value', invoiceval[count - 1].unitprice);
-    gettaxpercent().clear();
-    gettaxpercent()
+    getTaxPercent().clear();
+    getTaxPercent()
       .type(invoiceval[count - 1].tax)
       .should('have.value', invoiceval[count - 1].tax);
     cy.log('Tax %  : ' + invoiceval[count - 1].tax);
@@ -275,7 +276,7 @@ describe("Validate Amount and Tax for multiple scenario's", () => {
     cy.url().should('include', '/invoices/create');
     cy.wait(2000);
     cy.get('h1').contains('Create Invoice');
-    getcurrencydropdown().click({ force: true });
+    getCurrencyDropdown().click({ force: true });
     cy.get('li')
       .contains(invoiceval[count - 1].Currency)
       .click({ force: true });
@@ -287,12 +288,12 @@ describe("Validate Amount and Tax for multiple scenario's", () => {
     getQuantity()
       .type(invoiceval[count - 1].Qty)
       .should('have.value', invoiceval[count - 1].Qty);
-    getunitprice().clear();
-    getunitprice()
+    getUnitPrice().clear();
+    getUnitPrice()
       .type(invoiceval[count - 1].unitprice)
       .should('have.value', invoiceval[count - 1].unitprice);
-    gettaxpercent().clear();
-    gettaxpercent()
+    getTaxPercent().clear();
+    getTaxPercent()
       .type(invoiceval[count - 1].tax)
       .should('have.value', invoiceval[count - 1].tax);
     cy.log('Tax %  : ' + invoiceval[count - 1].tax);
@@ -319,7 +320,7 @@ describe("Validate Amount and Tax for multiple scenario's", () => {
     cy.url().should('include', '/invoices/create');
     cy.wait(2000);
     cy.get('h1').contains('Create Invoice');
-    getcurrencydropdown().click({ force: true });
+    getCurrencyDropdown().click({ force: true });
     cy.get('li')
       .contains(invoiceval[count - 1].Currency)
       .click({ force: true });
@@ -331,12 +332,12 @@ describe("Validate Amount and Tax for multiple scenario's", () => {
     getQuantity()
       .type(invoiceval[count - 1].Qty_1)
       .should('have.value', invoiceval[count - 1].Qty_1);
-    getunitprice().clear();
-    getunitprice()
+    getUnitPrice().clear();
+    getUnitPrice()
       .type(invoiceval[count - 1].unitprice_1)
       .should('have.value', invoiceval[count - 1].unitprice_1);
-    gettaxpercent().clear();
-    gettaxpercent()
+    getTaxPercent().clear();
+    getTaxPercent()
       .type(invoiceval[count - 1].tax_1)
       .should('have.value', invoiceval[count - 1].tax_1);
     getAddItemButton().click({ force: true });

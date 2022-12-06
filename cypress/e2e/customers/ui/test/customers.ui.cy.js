@@ -14,7 +14,7 @@ import {
   getCloseButton,
   getAddPayeeButton,
   getCompanyField,
-  getMoredetailsButton,
+  getMoreDetailsButton,
   getFirstNameField,
   getButtonSubmit,
   getProfileButton,
@@ -59,8 +59,8 @@ describe('Customers UI tests ', () => {
     getEmailField().type(usremail).should('have.value', usremail);
     getFirstNameField().type(firstname).should('have.value', firstname);
     getButtonSubmit().should('be.enabled', true);
-    getMoredetailsButton().should('be.visible', true);
-    getMoredetailsButton().click({ force: true });
+    getMoreDetailsButton().should('be.visible', true);
+    getMoreDetailsButton().click({ force: true });
     getAddressInput().type(addrss).should('have.value', addrss);
     getButtonSubmit().should('be.enabled', true);
     getButtonSubmit().click({ force: true });
@@ -108,8 +108,8 @@ describe('Customers UI tests ', () => {
               .eq(3)
               .find("button[aria-label='Edit Payee']");
             updatebtn.click({ force: true });
-            getMoredetailsButton().should('be.visible', true);
-            getMoredetailsButton().click({ force: true });
+            getMoreDetailsButton().should('be.visible', true);
+            getMoreDetailsButton().click({ force: true });
             getFirstNameField().clear();
             getFirstNameField().type(updatedname).should('have.value', updatedname);
             getButtonUpdate().should('be.enabled', true);
@@ -181,12 +181,10 @@ describe('Customers UI tests ', () => {
       });
   });
 
-    after(() => {
-    cy.log("After hook started ")
+  after(() => {
+    cy.log('After hook started');
     getProfileButton().click({ force: true });
     getLogoutButton().click({ force: true });
     cy.url().should('include', '/auth');
-    
   });
-
 });
