@@ -1,9 +1,9 @@
 const crypto = require('crypto');
 
-function generateRequestAuthHeaders(requestapi, apiAuth, versions) {
+function generateRequestAuthHeaders(requestAPI, apiAuth, versions) {
   let postBodyJson = '{}';
-  if (requestapi.method === 'POST' || requestapi.method === 'PUT') {
-    postBodyJson = JSON.stringify(requestapi.body);
+  if (requestAPI.method === 'POST' || requestAPI.method === 'PUT') {
+    postBodyJson = JSON.stringify(requestAPI.body);
   } else {
     return {};
   }
@@ -11,7 +11,7 @@ function generateRequestAuthHeaders(requestapi, apiAuth, versions) {
   const timestamp = new Date().getTime().toString();
   const headers = {};
 
-  let requestPath = requestapi.url;
+  let requestPath = requestAPI.url;
 
   // requestPath = requestPath.replace('{{', '').replace('}}', '').replace('/api', '').trim();
 

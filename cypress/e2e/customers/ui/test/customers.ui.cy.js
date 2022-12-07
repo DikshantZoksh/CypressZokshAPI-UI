@@ -1,4 +1,4 @@
-/// <reference types = "Cypress" />
+// <reference types = "Cypress" />
 
 const cred = require('../test-data/credentials.test-data');
 
@@ -13,7 +13,7 @@ import {
   getEmailField,
   getCloseButton,
   getAddPayeeButton,
-  getCompanyField,
+  // getCompanyField,
   getMoreDetailsButton,
   getFirstNameField,
   getButtonSubmit,
@@ -29,8 +29,10 @@ describe('Customers UI tests ', () => {
   let updatedname = '';
   let addrss = '';
   let rndx = Math.floor(Math.random() * 100 + 1);
+
   usremail = 'TestQA_' + rndx + '@gmail.com';
   firstname = 'RockQA' + rndx;
+
   let Compname = 'Zoksh';
   updatedname = 'update_' + firstname;
   addrss = 'RockQA_zoksh';
@@ -53,6 +55,7 @@ describe('Customers UI tests ', () => {
     cy.url().should('include', '/invoices/create');
     cy.wait(2000);
     cy.get('h1').contains('Create Invoice');
+
     getSelectPayeeButton().click({ force: true });
     getAddPayeeButton().should('be.visible', true);
     getAddPayeeButton().click({ force: true });
@@ -145,6 +148,7 @@ describe('Customers UI tests ', () => {
     cy.url().should('include', '/invoices/create');
     cy.wait(2000);
     cy.get('h1').contains('Create Invoice');
+
     getSelectPayeeButton().click({ force: true });
     getCustomerListTable()
       .find('tr')
@@ -153,6 +157,7 @@ describe('Customers UI tests ', () => {
         row.toArray().forEach((element) => {
           if (element.innerHTML.includes(usremail)) {
             cy.log('Row index for the deleted item - ' + row.index(element));
+
             const deletebtn = getCustomerListTable()
               .find('tr')
               .eq(row.index(element))
