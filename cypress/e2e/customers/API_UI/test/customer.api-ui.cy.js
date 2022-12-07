@@ -2,13 +2,13 @@
 
 const { generateRequestAuthHeaders } = require('../../../../pre-request');
 const environments = require('../env/customer.env');
-const cust = require('../test-data/customercreation.test-data');
+const cust = require('../test-data/customer-creation.test-data');
 const cred = require('../test-data/credentials.test-data');
-const { apiAuth, versions, custAPIurl, custAPIep, bearerToken } = environments ;
+const { apiAuth, versions, custAPIurl, custAPIep, bearerToken } = environments;
 
 let post_Body = JSON.parse(JSON.stringify(cust));
 
-let requestapi = {};
+let requestAPI = {};
 
 import {
   getEmailLogin,
@@ -22,34 +22,34 @@ import {
 } from '../../../../support/object-repo';
 
 describe('Customer creation through API and validate on UI', () => {
-  let zokshkey;
-  let zokshts;
-  let zokshsign;
+  let zokshKey;
+  let zokshTimestamp;
+  let zokshSign;
 
-  let authHeaders = generateRequestAuthHeaders(requestapi, apiAuth, versions);
-  zokshkey = authHeaders['zoksh-key'];
-  zokshts = authHeaders['zoksh-ts'];
-  zokshsign = authHeaders['zoksh-sign'];
+  let authHeaders = generateRequestAuthHeaders(requestAPI, apiAuth, versions);
+  zokshKey = authHeaders['zoksh-key'];
+  zokshTimestamp = authHeaders['zoksh-ts'];
+  zokshSign = authHeaders['zoksh-sign'];
 
   it('TC-01 : API : Create a customer with Primary and secondary details and validate the data in response ', (done) => {
-    requestapi = {
+    requestAPI = {
       url: custAPIep,
       method: 'POST',
       body: post_Body,
       headers: {},
     };
     cy.request({
-      method: requestapi.method,
-      url: custAPIurl + requestapi.url,
+      method: requestAPI.method,
+      url: custAPIurl + requestAPI.url,
       headers: {
         Authorization: 'Bearer ' + bearerToken,
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'zoksh-key': zokshkey,
-        'zoksh-ts': zokshts,
-        'zoksh-sign': zokshsign,
+        'zoksh-key': zokshKey,
+        'zoksh-ts': zokshTimestamp,
+        'zoksh-sign': zokshSign,
       },
-      body: requestapi.body,
+      body: requestAPI.body,
     }).then((res) => {
       expect(res.status).to.be.equal(200);
       expect(res.body.success).to.be.equal(true);
@@ -58,39 +58,33 @@ describe('Customer creation through API and validate on UI', () => {
       expect(res.body.data.customer.email).to.be.equal(post_Body.email);
       expect(res.body.data.customer.address[0]).to.be.equal(post_Body.address[0]);
       expect(res.body.data.customer.address[1]).to.be.equal(post_Body.address[1]);
-      expect(res.body.data.customer.organisation).to.be.equal(post_Body.organisation);
-      expect(res.body.data.customer.pin).to.be.equal(post_Body.pin);
-      expect(res.body.data.customer.city).to.be.equal(post_Body.city);
-      expect(res.body.data.customer.state).to.be.equal(post_Body.state);
-      expect(res.body.data.customer.country).to.be.equal(post_Body.country);
       expect(res.body.data.customer.merchant).to.be.equal(post_Body.merchant);
       done();
     });
   }).timeout(20000);
-  
 
   it('TC-02 : UI : Verify the customer details on UI created through API', () => {
-    cy.log("Email : - " + post_Body.email + " will be serached in UI")
-    cy.visit(cred.app_url)
+    cy.log('Email : - ' + post_Body.email + ' will be serached in UI');
+    cy.visit(cred.app_url);
     getEmailLogin().type(cred.username).should('have.value', cred.username);
     getPasswordLogin().type(cred.password).should('have.value', cred.password);
     getButtonLogin().click();
     cy.url().should('include', '/dashboard');
-    getInvoiceLink().click({ force: true });
+    getInvoiceLink().click({ force: true, multiple: true });
     cy.url().should('include', '/invoices');
     getCreateInvoiceButton().click({ force: true });
     cy.url().should('include', '/invoices/create');
     cy.wait(2000);
     cy.get('h1').contains('Create Invoice');
     getSelectPayeeButton().click({ force: true });
-    cy.wait(3000)
+    cy.wait(3000);
     getCustomerListTable()
       .find('tr')
       .then((row) => {
-        cy.log("Total number of Rows are " + row.length);
+        cy.log('Total number of Rows are ' + row.length);
         row.toArray().forEach((element) => {
           if (element.innerHTML.includes(post_Body.email)) {
-            cy.log("Email found at row index - " + row.index(element));
+            cy.log('Email found at row index - ' + row.index(element));
             getCustomerListTable()
               .find('tr')
               .eq(row.index(element))

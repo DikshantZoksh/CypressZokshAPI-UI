@@ -8,44 +8,44 @@ import { getProfileText, getNameField, getEmailField } from '../../../../support
 
 let post_Body = JSON.parse(JSON.stringify(order));
 
-let requestapi = {};
+let requestAPI = {};
 let count = 0;
 let res_url = '';
 
 describe('OrderCreation API Tests', () => {
-  let zokshkey;
-  let zokshts;
-  let zokshsign;
+  let zokshKey;
+  let zokshTimestamp;
+  let zokshSign;
 
   beforeEach(() => {
     console.log('BeforeEach Hook started :' + count);
     post_Body = JSON.parse(JSON.stringify(order));
     count = count + 1;
-    requestapi = {
+    requestAPI = {
       url: '/v2/order',
       method: 'POST',
       body: post_Body[count - 1],
       headers: {},
     };
 
-    let authHeaders = generateRequestAuthHeaders(requestapi, apiAuth, versions);
-    zokshkey = authHeaders['zoksh-key'];
-    zokshts = authHeaders['zoksh-ts'];
-    zokshsign = authHeaders['zoksh-sign'];
+    let authHeaders = generateRequestAuthHeaders(requestAPI, apiAuth, versions);
+    zokshKey = authHeaders['zoksh-key'];
+    zokshTimestamp = authHeaders['zoksh-ts'];
+    zokshSign = authHeaders['zoksh-sign'];
   });
 
   it('TC-01 : Token - NA : No Specified chain or currency', (done) => {
     cy.request({
-      method: requestapi.method,
-      url: baseurl + requestapi.url,
+      method: requestAPI.method,
+      url: baseurl + requestAPI.url,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'zoksh-key': zokshkey,
-        'zoksh-ts': zokshts,
-        'zoksh-sign': zokshsign,
+        'zoksh-key': zokshKey,
+        'zoksh-ts': zokshTimestamp,
+        'zoksh-sign': zokshSign,
       },
-      body: requestapi.body,
+      body: requestAPI.body,
     }).then((res) => {
       expect(res.status).to.be.equal(200);
       expect(res.body.orderId).to.be.not.null;
@@ -59,16 +59,16 @@ describe('OrderCreation API Tests', () => {
 
   it('TC-02 : Token - NA : Prefill - All Blank : No Specified chain or currency', (done) => {
     cy.request({
-      method: requestapi.method,
-      url: baseurl + requestapi.url,
+      method: requestAPI.method,
+      url: baseurl + requestAPI.url,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'zoksh-key': zokshkey,
-        'zoksh-ts': zokshts,
-        'zoksh-sign': zokshsign,
+        'zoksh-key': zokshKey,
+        'zoksh-ts': zokshTimestamp,
+        'zoksh-sign': zokshSign,
       },
-      body: requestapi.body,
+      body: requestAPI.body,
     }).then((res) => {
       expect(res.status).to.be.equal(200);
       expect(res.body.orderId).to.be.not.null;
@@ -82,16 +82,16 @@ describe('OrderCreation API Tests', () => {
 
   it('TC-03 : Token - NA : Prefill - Phone, Email - Blank : No Specified chain or currency', (done) => {
     cy.request({
-      method: requestapi.method,
-      url: baseurl + requestapi.url,
+      method: requestAPI.method,
+      url: baseurl + requestAPI.url,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'zoksh-key': zokshkey,
-        'zoksh-ts': zokshts,
-        'zoksh-sign': zokshsign,
+        'zoksh-key': zokshKey,
+        'zoksh-ts': zokshTimestamp,
+        'zoksh-sign': zokshSign,
       },
-      body: requestapi.body,
+      body: requestAPI.body,
     }).then((res) => {
       expect(res.status).to.be.equal(200);
       expect(res.body.orderId).to.be.not.null;
@@ -105,16 +105,16 @@ describe('OrderCreation API Tests', () => {
 
   it('TC-04 : Token - NA : Prefill - Name, Email - Blank : No Specified chain or currency', (done) => {
     cy.request({
-      method: requestapi.method,
-      url: baseurl + requestapi.url,
+      method: requestAPI.method,
+      url: baseurl + requestAPI.url,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'zoksh-key': zokshkey,
-        'zoksh-ts': zokshts,
-        'zoksh-sign': zokshsign,
+        'zoksh-key': zokshKey,
+        'zoksh-ts': zokshTimestamp,
+        'zoksh-sign': zokshSign,
       },
-      body: requestapi.body,
+      body: requestAPI.body,
     }).then((res) => {
       expect(res.status).to.be.equal(200);
       expect(res.body.orderId).to.be.not.null;
@@ -128,16 +128,16 @@ describe('OrderCreation API Tests', () => {
 
   it('TC-05 : Name,Phone - Blank : No Specified chain or currency', (done) => {
     cy.request({
-      method: requestapi.method,
-      url: baseurl + requestapi.url,
+      method: requestAPI.method,
+      url: baseurl + requestAPI.url,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'zoksh-key': zokshkey,
-        'zoksh-ts': zokshts,
-        'zoksh-sign': zokshsign,
+        'zoksh-key': zokshKey,
+        'zoksh-ts': zokshTimestamp,
+        'zoksh-sign': zokshSign,
       },
-      body: requestapi.body,
+      body: requestAPI.body,
     }).then((res) => {
       expect(res.status).to.be.equal(200);
       expect(res.body.orderId).to.be.not.null;
@@ -151,16 +151,16 @@ describe('OrderCreation API Tests', () => {
 
   it('TC-06 : Name,Phone,Label - Blank : No Specified chain or currency', (done) => {
     cy.request({
-      method: requestapi.method,
-      url: baseurl + requestapi.url,
+      method: requestAPI.method,
+      url: baseurl + requestAPI.url,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'zoksh-key': zokshkey,
-        'zoksh-ts': zokshts,
-        'zoksh-sign': zokshsign,
+        'zoksh-key': zokshKey,
+        'zoksh-ts': zokshTimestamp,
+        'zoksh-sign': zokshSign,
       },
-      body: requestapi.body,
+      body: requestAPI.body,
     }).then((res) => {
       expect(res.status).to.be.equal(200);
       expect(res.body.orderId).to.be.not.null;
@@ -174,16 +174,16 @@ describe('OrderCreation API Tests', () => {
 
   it('TC-07 : Name,Phone,Description - Blank : No Specified chain or currency', (done) => {
     cy.request({
-      method: requestapi.method,
-      url: baseurl + requestapi.url,
+      method: requestAPI.method,
+      url: baseurl + requestAPI.url,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'zoksh-key': zokshkey,
-        'zoksh-ts': zokshts,
-        'zoksh-sign': zokshsign,
+        'zoksh-key': zokshKey,
+        'zoksh-ts': zokshTimestamp,
+        'zoksh-sign': zokshSign,
       },
-      body: requestapi.body,
+      body: requestAPI.body,
     }).then((res) => {
       expect(res.status).to.be.equal(200);
       expect(res.body.orderId).to.be.not.null;
@@ -197,16 +197,16 @@ describe('OrderCreation API Tests', () => {
 
   it('TC-08 : Name,Phone,Extra - Blank : No Specified chain or currency', (done) => {
     cy.request({
-      method: requestapi.method,
-      url: baseurl + requestapi.url,
+      method: requestAPI.method,
+      url: baseurl + requestAPI.url,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'zoksh-key': zokshkey,
-        'zoksh-ts': zokshts,
-        'zoksh-sign': zokshsign,
+        'zoksh-key': zokshKey,
+        'zoksh-ts': zokshTimestamp,
+        'zoksh-sign': zokshSign,
       },
-      body: requestapi.body,
+      body: requestAPI.body,
     }).then((res) => {
       expect(res.status).to.be.equal(200);
       expect(res.body.orderId).to.be.not.null;

@@ -1,4 +1,4 @@
-/// <reference types = "Cypress" />
+// <reference types = "Cypress" />
 
 const cred = require('../test-data/credentials.test-data');
 
@@ -13,8 +13,8 @@ import {
   getEmailField,
   getCloseButton,
   getAddPayeeButton,
-  getCompanyField,
-  getMoredetailsButton,
+  // getCompanyField,
+  getMoreDetailsButton,
   getFirstNameField,
   getButtonSubmit,
   getProfileButton,
@@ -29,8 +29,10 @@ describe('Customers UI tests ', () => {
   let updatedname = '';
   let addrss = '';
   let rndx = Math.floor(Math.random() * 100 + 1);
+
   usremail = 'TestQA_' + rndx + '@gmail.com';
   firstname = 'RockQA' + rndx;
+
   let Compname = 'Zoksh';
   updatedname = 'update_' + firstname;
   addrss = 'RockQA_zoksh';
@@ -47,20 +49,21 @@ describe('Customers UI tests ', () => {
   });
 
   it('TC02 : Create a new customer and verify the customer details', () => {
-    getInvoiceLink().click({ force: true });
+    getInvoiceLink().click({ force: true, multiple: true });
     cy.url().should('include', '/invoices');
     getCreateInvoiceButton().click({ force: true });
     cy.url().should('include', '/invoices/create');
     cy.wait(2000);
     cy.get('h1').contains('Create Invoice');
+
     getSelectPayeeButton().click({ force: true });
     getAddPayeeButton().should('be.visible', true);
     getAddPayeeButton().click({ force: true });
     getEmailField().type(usremail).should('have.value', usremail);
     getFirstNameField().type(firstname).should('have.value', firstname);
     getButtonSubmit().should('be.enabled', true);
-    getMoredetailsButton().should('be.visible', true);
-    getMoredetailsButton().click({ force: true });
+    getMoreDetailsButton().should('be.visible', true);
+    getMoreDetailsButton().click({ force: true });
     getAddressInput().type(addrss).should('have.value', addrss);
     getButtonSubmit().should('be.enabled', true);
     getButtonSubmit().click({ force: true });
@@ -87,7 +90,7 @@ describe('Customers UI tests ', () => {
   });
 
   it('TC03 : Update the customer information and verify the details after update', () => {
-    getInvoiceLink().click({ force: true });
+    getInvoiceLink().click({ force: true, multiple: true });
     cy.url().should('include', '/invoices');
     getCreateInvoiceButton().click({ force: true });
     cy.url().should('include', '/invoices/create');
@@ -108,8 +111,8 @@ describe('Customers UI tests ', () => {
               .eq(3)
               .find("button[aria-label='Edit Payee']");
             updatebtn.click({ force: true });
-            getMoredetailsButton().should('be.visible', true);
-            getMoredetailsButton().click({ force: true });
+            getMoreDetailsButton().should('be.visible', true);
+            getMoreDetailsButton().click({ force: true });
             getFirstNameField().clear();
             getFirstNameField().type(updatedname).should('have.value', updatedname);
             getButtonUpdate().should('be.enabled', true);
@@ -139,12 +142,13 @@ describe('Customers UI tests ', () => {
   });
 
   it('TC04 : Delete the customer and verify after deletion', () => {
-    getInvoiceLink().click({ force: true });
+    getInvoiceLink().click({ force: true, multiple: true });
     cy.url().should('include', '/invoices');
     getCreateInvoiceButton().click({ force: true });
     cy.url().should('include', '/invoices/create');
     cy.wait(2000);
     cy.get('h1').contains('Create Invoice');
+
     getSelectPayeeButton().click({ force: true });
     getCustomerListTable()
       .find('tr')
@@ -153,6 +157,7 @@ describe('Customers UI tests ', () => {
         row.toArray().forEach((element) => {
           if (element.innerHTML.includes(usremail)) {
             cy.log('Row index for the deleted item - ' + row.index(element));
+
             const deletebtn = getCustomerListTable()
               .find('tr')
               .eq(row.index(element))
@@ -181,12 +186,10 @@ describe('Customers UI tests ', () => {
       });
   });
 
-    after(() => {
-    cy.log("After hook started ")
+  after(() => {
+    cy.log('After hook started');
     getProfileButton().click({ force: true });
     getLogoutButton().click({ force: true });
     cy.url().should('include', '/auth');
-    
   });
-
 });
