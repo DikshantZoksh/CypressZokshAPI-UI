@@ -45,7 +45,7 @@ describe('Create and view the invoice', async () => {
 
   it('View invoice', async () => {
     getInvoiceLink().click({ force: true, multiple: true });
-    // cy.wait(5000);
+
     const invoiceTbl = cy.get("Table[role='table']");
     if (invoiceTbl.should('exist')) {
       creationText = await getCreationDate();
