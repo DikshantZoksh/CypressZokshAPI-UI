@@ -70,7 +70,7 @@ describe('Customer creation through API and validate on UI', () => {
     getPasswordLogin().type(cred.password).should('have.value', cred.password);
     getButtonLogin().click();
     cy.url().should('include', '/dashboard');
-    getInvoiceLink().click({ force: true });
+    getInvoiceLink().click({ force: true, multiple: true });
     cy.url().should('include', '/invoices');
     getCreateInvoiceButton().click({ force: true });
     cy.url().should('include', '/invoices/create');

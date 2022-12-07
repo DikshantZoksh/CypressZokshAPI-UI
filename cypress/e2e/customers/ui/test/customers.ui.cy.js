@@ -49,7 +49,7 @@ describe('Customers UI tests ', () => {
   });
 
   it('TC02 : Create a new customer and verify the customer details', () => {
-    getInvoiceLink().click({ force: true });
+    getInvoiceLink().click({ force: true, multiple: true });
     cy.url().should('include', '/invoices');
     getCreateInvoiceButton().click({ force: true });
     cy.url().should('include', '/invoices/create');
@@ -90,7 +90,7 @@ describe('Customers UI tests ', () => {
   });
 
   it('TC03 : Update the customer information and verify the details after update', () => {
-    getInvoiceLink().click({ force: true });
+    getInvoiceLink().click({ force: true, multiple: true });
     cy.url().should('include', '/invoices');
     getCreateInvoiceButton().click({ force: true });
     cy.url().should('include', '/invoices/create');
@@ -142,7 +142,7 @@ describe('Customers UI tests ', () => {
   });
 
   it('TC04 : Delete the customer and verify after deletion', () => {
-    getInvoiceLink().click({ force: true });
+    getInvoiceLink().click({ force: true, multiple: true });
     cy.url().should('include', '/invoices');
     getCreateInvoiceButton().click({ force: true });
     cy.url().should('include', '/invoices/create');
