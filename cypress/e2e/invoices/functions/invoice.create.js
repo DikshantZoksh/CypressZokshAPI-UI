@@ -27,23 +27,21 @@ import {
 } from '../../../support/object-repo';
 
 // Get customer email from the customer table
-export async function getCustomerEmail() {
-  return new Promise((resolve, reject) => {
-    getCustomerListTable()
-      .find('tr')
-      .eq(1)
-      .find('td')
-      .eq(1)
-      .then(($el) => {
-        const emailAddress = $el.text();
-        cy.log('Customer Email is : ' + emailAddress);
-        resolve(emailAddress);
-      });
-  });
+export function getCustomerEmail() {
+  getCustomerListTable()
+    .find('tr')
+    .eq(1)
+    .find('td')
+    .eq(1)
+    .then(($el) => {
+      const emailAddress = $el.text();
+      cy.log('Customer Email is : ' + emailAddress);
+      cy.wrap(emailAddress).as('customerEmailAddress');
+    });
 }
 
 // Check if any payee exist in the payee information table
-export async function checkIfPayeeExist() {
+export function checkIfPayeeExist() {
   getInvoiceLink().click({ force: true, multiple: true });
   cy.url().should('include', '/invoices');
 
@@ -54,18 +52,12 @@ export async function checkIfPayeeExist() {
   cy.get('h1').contains('Create Invoice');
   getSelectPayeeButton().click({ force: true });
 
-  return new Promise((resolve, reject) => {
-    getCustomerListTable()
-      .find('tr')
-      .then((row) => {
-        let row_count = row.length;
-        if (row_count >= 2) {
-          resolve(true);
-        } else {
-          resolve(false);
-        }
-      });
-  });
+  getCustomerListTable()
+    .find('tr')
+    .then((row) => {
+      return row.length;
+    })
+    .should('be.gte', 2);
 }
 
 // Login to the DashBoard
@@ -94,42 +86,56 @@ export function selectFirstCustomer() {
 
 // Fill invoice details
 export function setInvoiceDetails() {
+  // set date issued on
   getDateIssuedOn().clear();
-  getDateIssuedOn().type(invoice.issuedon).should('have.value', invoice.issuedon);
+  getDateIssuedOn().type(invoice.issuedOn).should('have.value', invoice.issuedOn);
+
+  // set payment due date
   getDatePaymentDueBy().clear();
-  getDatePaymentDueBy().type(invoice.paymentdueby).should('have.value', invoice.paymentdueby);
+  getDatePaymentDueBy().type(invoice.paymentDueBy).should('have.value', invoice.paymentDueBy);
+
+  // set currency
   getCurrencyDropdown().click({ force: true });
-  cy.get('li').contains(invoice.Currency).click({ force: true });
+  cy.get('li').contains(invoice.currency).click({ force: true });
+
+  // set description
   getDescriptioninput().clear();
   getDescriptioninput().type(invoice.description).should('have.value', invoice.description);
+
+  // set quantity
   getQuantity().clear();
-  getQuantity().type(invoice.Qty).should('have.value', invoice.Qty);
+  getQuantity().type(invoice.quantity).should('have.value', invoice.quantity);
+
+  // set unit price
   getUnitPrice().clear();
-  getUnitPrice().type(invoice.unitprice).should('have.value', invoice.unitprice);
+  getUnitPrice().type(invoice.unitPrice).should('have.value', invoice.unitPrice);
+
+  // set tax percent
   getTaxPercent().clear();
   getTaxPercent().type(invoice.tax).should('have.value', invoice.tax);
 
+  // log values
   cy.log('Tax %  : ' + invoice.tax);
-  cy.log('Quanity : ' + invoice.Qty);
-  cy.log('Unit Price : ' + invoice.unitprice);
+  cy.log('Quanity : ' + invoice.quantity);
+  cy.log('Unit Price : ' + invoice.unitPrice);
 
-  let amount_withoutTax = invoice.Qty * invoice.unitprice;
-  amount_withoutTax = truncateToDecimals(amount_withoutTax);
+  let amountWithoutTax = invoice.quantity * invoice.unitPrice;
+  amountWithoutTax = truncateToDecimals(amountWithoutTax);
 
-  cy.log('Amount without Tax : ' + amount_withoutTax);
+  cy.log('Amount without Tax : ' + amountWithoutTax);
 
-  let tax_amount = (invoice.tax / 100) * amount_withoutTax;
-  tax_amount = truncateToDecimals(tax_amount);
+  let taxAmount = (invoice.tax / 100) * amountWithoutTax;
+  taxAmount = truncateToDecimals(taxAmount);
 
-  cy.log('Tax amount : ' + tax_amount);
+  cy.log('Tax amount : ' + taxAmount);
 
-  let total_amount = amount_withoutTax + tax_amount;
-  total_amount = truncateToDecimals(total_amount);
+  let totalAmount = amountWithoutTax + taxAmount;
+  totalAmount = truncateToDecimals(totalAmount);
+  cy.log('Total Amount : ' + totalAmount);
 
-  cy.log('Total Amount : ' + total_amount);
-  getAmtwithoutTax().should('have.value', amount_withoutTax);
-  getTaxAmount().should('have.value', tax_amount);
-  getTotalAmount().should('have.value', total_amount);
+  getAmtwithoutTax().should('have.value', amountWithoutTax);
+  getTaxAmount().should('have.value', taxAmount);
+  getTotalAmount().should('have.value', totalAmount);
 }
 
 //View the last created invoice from the table
@@ -138,80 +144,71 @@ export function viewLastCreatedInvoice() {
 }
 
 // Get creation date from the last created invoice on the invoice table
-export async function getCreationDate() {
-  return new Promise((resolve, reject) => {
-    cy.get("Table[role='table']")
-      .find('tr')
-      .eq(1)
-      .find('td')
-      .eq(0)
-      .then(($btn) => {
-        const creationDate = $btn.text();
-        cy.log('Creation date: ' + creationDate);
-        resolve(creationDate);
-      });
-  });
+export function getCreationDate() {
+  cy.get("Table[role='table']")
+    .find('tr')
+    .eq(1)
+    .find('td')
+    .eq(0)
+    .then(($btn) => {
+      const creationDate = $btn.text();
+      cy.log('Creation date: ' + creationDate);
+      cy.wrap(creationDate).as('invoiceCreationDate');
+    });
 }
 
 //Get invoice number from the last created invoice on the invoice table
-export async function getInvoiceNumber() {
-  return new Promise((resolve, reject) => {
-    cy.get("Table[role='table']")
-      .find('tr')
-      .eq(1)
-      .find('td')
-      .eq(1)
-      .then(($btn) => {
-        const val = $btn.text();
-        resolve(val);
-      });
-  });
+export function getInvoiceNumber() {
+  cy.get("Table[role='table']")
+    .find('tr')
+    .eq(1)
+    .find('td')
+    .eq(1)
+    .then(($btn) => {
+      const invoiceNumber = $btn.text();
+      cy.log('Invoice Number: ' + invoiceNumber);
+      cy.wrap(invoiceNumber).as('invoiceNumber');
+    });
 }
 
 //Get client name from the last created invoice on the invoice table
-export async function getClientName() {
-  return new Promise((resolve, reject) => {
-    cy.get("Table[role='table']")
-      .find('tr')
-      .eq(1)
-      .find('td')
-      .eq(2)
-      .then(($btn) => {
-        const clientNameText = $btn.text();
-        cy.log('Client name  is : ' + clientNameText);
-        resolve(clientNameText);
-      });
-  });
+export function getClientName() {
+  cy.get("Table[role='table']")
+    .find('tr')
+    .eq(1)
+    .find('td')
+    .eq(2)
+    .then(($btn) => {
+      const clientNameText = $btn.text();
+      cy.log('Client name  is : ' + clientNameText);
+      cy.wrap(clientNameText).as('invoiceClientName');
+    });
 }
 
 //Get invoice status from the last created invoice on the invoice table
-export async function getInvoiceStatus() {
-  return new Promise((resolve, reject) => {
-    cy.get("Table[role='table']")
-      .find('tr')
-      .eq(1)
-      .find('td')
-      .eq(3)
-      .then(($btn) => {
-        const invoiceStatus = $btn.text();
-        cy.log('Invoice  status is : ' + invoiceStatus);
-        resolve(invoiceStatus);
-      });
-  });
+export function getInvoiceStatus() {
+  cy.get("Table[role='table']")
+    .find('tr')
+    .eq(1)
+    .find('td')
+    .eq(3)
+    .then(($btn) => {
+      const invoiceStatus = $btn.text();
+      cy.log('Invoice  status is : ' + invoiceStatus);
+      cy.wrap(invoiceStatus).as('invoiceStatus');
+    });
 }
 
 //Get invoice amount date from the last created invoice on the invoice table
 export async function getInvoiceAmount() {
-  return new Promise((resolve, reject) => {
-    cy.get("Table[role='table']")
-      .find('tr')
-      .eq(1)
-      .find('td')
-      .eq(4)
-      .then(($btn) => {
-        const invoiceAmount = $btn.text();
-        cy.log('Invoice amount is : ' + invoiceAmount);
-        resolve(invoiceAmount);
-      });
-  });
+  cy.get("Table[role='table']")
+    .find('tr')
+    .eq(1)
+    .find('td')
+    .eq(4)
+    .then(($btn) => {
+      const invoiceAmount = $btn.text();
+      cy.log('Invoice amount is : ' + invoiceAmount);
+      cy.wrap(invoiceAmount).as('invoiceAmount');
+    });
 }

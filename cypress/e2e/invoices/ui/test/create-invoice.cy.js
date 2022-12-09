@@ -2,13 +2,6 @@
 
 const invoicefun = require('../../functions/invoice.create');
 
-let customerEmail = '';
-let creationText = '';
-let invoiceNumber = '';
-let clientName = '';
-let statusText = '';
-let amountVal = null;
-
 import {
   loginDashboard,
   selectFirstCustomer,
@@ -31,36 +24,37 @@ import {
   getPaymentDueDate,
 } from '../../../../support/object-repo';
 
-describe('Create and view the invoice', async () => {
-  it('Create invoice', async () => {
-    let payeeExists;
-
+describe('Invoice Creation', () => {
+  before(() => {
     loginDashboard();
-    payeeExists = await checkIfPayeeExist();
-    customerEmail = await getCustomerEmail();
+  });
+
+  it('Create and view the invoice', () => {
+    checkIfPayeeExist();
+    getCustomerEmail();
     selectFirstCustomer();
     setInvoiceDetails();
     getGenerateInvoiceButton().click({ force: true });
-  });
 
-  it('View invoice', async () => {
+    // wait for the generate invoice request to complete
+    cy.wait(4500);
+
     getInvoiceLink().click({ force: true, multiple: true });
 
     const invoiceTbl = cy.get("Table[role='table']");
     if (invoiceTbl.should('exist')) {
-      creationText = await getCreationDate();
+      getCreationDate();
+      getInvoiceNumber();
+      getClientName();
+      getInvoiceStatus();
+      getInvoiceAmount();
 
-      invoiceNumber = await getInvoiceNumber();
-      cy.log(`Invoice number fetched from table : ${invoiceNumber}`);
-
-      clientName = await getClientName();
-      statusText = await getInvoiceStatus();
-      amountVal = await getInvoiceAmount();
-
-      if (expect(clientName).to.contains(customerEmail)) {
-        cy.log('Condtion is True');
-        viewLastCreatedInvoice();
-      }
+      cy.get('@invoiceClientName').then((clientName) => {
+        cy.get('@customerEmailAddress').then((emailAddress) => {
+          expect(clientName).to.contains(emailAddress);
+          viewLastCreatedInvoice();
+        });
+      });
     }
   });
 
