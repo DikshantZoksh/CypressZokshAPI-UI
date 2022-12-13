@@ -51,3 +51,4 @@ export const getPaymentDueDate = () => cy.get('div.invoice-view__identifiers__va
 export const btnFiatCurrency = () => cy.get('div.ramp__price__switcher.MuiBox-root.css-0').find('button').eq(0);
 export const inputSelectCurrency = () => cy.get('input#outlined-basic');
 export const currencysign = () => cy.get('p.MuiTypography-root.MuiTypography-body1.css-hkyn0c');
+export const firstitemselectcurr = () => cy.get('div.li.li-currency.MuiBox-root.css-5hut7e').eq(0).find('div[role="button"]');

@@ -1,6 +1,10 @@
 /// <reference types = "Cypress" />
 
 import {
+  validateCurrandSymbol
+} from '../../function/ramp';
+
+import {
   btnFiatCurrency,
   inputSelectCurrency,
   currencysign,
@@ -17,49 +21,20 @@ describe('Ramp On aggregator validation', () => {
   it('Validate Fiat currency and currency sign', () => {
 
     //Select fiat as EUR
-    btnFiatCurrency().click({ force: true })
-    inputSelectCurrency().type('EUR')
-    cy.get('div.li.li-currency.MuiBox-root.css-5hut7e').eq(0).find('div[role="button"]').click({force: true})
-    cy.wait(3000)
-    currencysign().should('have.text','€')
-
+    validateCurrandSymbol('EUR','€')
     //Select fiat as USD
-    btnFiatCurrency().click({ force: true })
-    inputSelectCurrency().type('USD')
-    cy.get('div.li.li-currency.MuiBox-root.css-5hut7e').eq(0).find('div[role="button"]').click({force: true})
-    cy.wait(3000)
-    currencysign().should('have.text','$')
-
-     //Select fiat as GBP
-     btnFiatCurrency().click({ force: true })
-     inputSelectCurrency().type('GBP')
-     cy.get('div.li.li-currency.MuiBox-root.css-5hut7e').eq(0).find('div[role="button"]').click({force: true})
-     cy.wait(3000)
-     currencysign().should('have.text','£')
-
+    validateCurrandSymbol('USD','$')
+    //Select fiat as GBP
+    validateCurrandSymbol('GBP','£')
      //Select fiat as CHF
-     btnFiatCurrency().click({ force: true })
-     inputSelectCurrency().type('CHF')
-     cy.get('div.li.li-currency.MuiBox-root.css-5hut7e').eq(0).find('div[role="button"]').click({force: true})
-     cy.wait(3000)
-     currencysign().should('have.text','CHF')
-
-     //Select fiat as SEK
-     btnFiatCurrency().click({ force: true })
-     inputSelectCurrency().type('SEK')
-     cy.get('div.li.li-currency.MuiBox-root.css-5hut7e').eq(0).find('div[role="button"]').click({force: true})
-     cy.wait(3000)
-     currencysign().should('have.text','kr')
-
+    validateCurrandSymbol('CHF','CHF')
+    //Select fiat as SEK
+    validateCurrandSymbol('SEK','kr')
     //Select fiat as PLN
-    btnFiatCurrency().click({ force: true })
-    inputSelectCurrency().type('PLN')
-    cy.get('div.li.li-currency.MuiBox-root.css-5hut7e').eq(0).find('div[role="button"]').click({force: true})
-    cy.wait(3000)
-    currencysign().should('have.text','zł')
-
-
-
+    validateCurrandSymbol('PLN','zł')
+    //Select fiat as NOK
+    validateCurrandSymbol('NOK','kr')
+    
   });
 
 });
