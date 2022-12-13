@@ -143,6 +143,13 @@ export function viewLastCreatedInvoice() {
   cy.get("Table[role='table']").find('tr').eq(1).find('td').eq(5).find('a').click({ force: true });
 }
 
+//Cancel the last created invoice from the table
+export function cancelLastCreatedInvoice() {
+  cy.get("Table[role='table']").find('tr').eq(1).find('td').eq(5).find('button').click({ force: true });
+  cy.contains('Cancel Invoice').click({ force: true });
+}
+
+
 // Get creation date from the last created invoice on the invoice table
 export function getCreationDate() {
   cy.get("Table[role='table']")

@@ -1,6 +1,5 @@
-// <reference types = "Cypress" />
+/// <reference types = "Cypress" />
 
-const invoicefun = require('../../functions/invoice.create');
 
 import {
   loginDashboard,
@@ -14,6 +13,7 @@ import {
   getInvoiceStatus,
   getInvoiceAmount,
   getCustomerEmail,
+  cancelLastCreatedInvoice
 } from '../../functions/invoice.create';
 
 import {
@@ -23,8 +23,6 @@ import {
   getIssuedOnDate,
   getPaymentDueDate,
 } from '../../../../support/object-repo';
-
-let  invoiceNumber = 0;
 
 describe('Invoice Creation', () => {
   before(() => {
@@ -37,12 +35,8 @@ describe('Invoice Creation', () => {
     selectFirstCustomer();
     setInvoiceDetails();
     getGenerateInvoiceButton().click({ force: true });
-
-    // wait for the generate invoice request to complete
     cy.wait(4500);
-
     getInvoiceLink().click({ force: true, multiple: true });
-
     const invoiceTbl = cy.get("Table[role='table']");
     if (invoiceTbl.should('exist')) {
       getCreationDate();
@@ -50,7 +44,6 @@ describe('Invoice Creation', () => {
       getClientName();
       getInvoiceStatus();
       getInvoiceAmount();
-      //invoiceNumber = cy.get('@invoiceNumber')
       cy.get('@invoiceClientName').then((clientName) => {
         cy.get('@customerEmailAddress').then((emailAddress) => {
           expect(clientName).to.contains(emailAddress);
@@ -62,4 +55,37 @@ describe('Invoice Creation', () => {
       });
     }
   });
+
+  it('Cancel the view and validate', () => {
+    checkIfPayeeExist();
+    getCustomerEmail();
+    selectFirstCustomer();
+    setInvoiceDetails();
+    getGenerateInvoiceButton().click({ force: true });
+    cy.wait(4500);
+    getInvoiceLink().click({ force: true, multiple: true });
+    const invoiceTbl = cy.get("Table[role='table']");
+    if (invoiceTbl.should('exist')) {
+      getCreationDate();
+      getInvoiceNumber();
+      getClientName();
+      getInvoiceStatus();
+      getInvoiceAmount();
+      cy.get('@invoiceClientName').then((clientName) => {
+        cy.get('@customerEmailAddress').then((emailAddress) => {
+          expect(clientName).to.contains(emailAddress);
+          cancelLastCreatedInvoice();
+        });
+      });
+      cy.wait(4000);
+      getInvoiceStatus();
+      cy.get('@invoiceStatus').then((invoiceStatus) => {
+        expect(invoiceStatus).to.be.eql('CANCELLED')
+      });
+    }
+  });
+
+
+
+
 });
