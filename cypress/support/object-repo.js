@@ -46,3 +46,8 @@ export const getDatePaymentDueBy = () => cy.get('input[placeholder="dd/mm/yyyy"]
 export const getInvoiceNum = () => cy.get('div.invoice-view__identifiers__values.MuiBox-root.css-14td103').eq(0);
 export const getIssuedOnDate = () => cy.get('div.invoice-view__identifiers__values.MuiBox-root.css-dvrkiq').eq(1);
 export const getPaymentDueDate = () => cy.get('div.invoice-view__identifiers__values.MuiBox-root.css-dvrkiq').eq(2);
+
+//Object from Ramp aggregator
+export const btnFiatCurrency = () => cy.get('div.ramp__price__switcher.MuiBox-root.css-0').find('button').eq(0);
+export const inputSelectCurrency = () => cy.get('input#outlined-basic');
+export const currencysign = () => cy.get('p.MuiTypography-root.MuiTypography-body1.css-hkyn0c');
