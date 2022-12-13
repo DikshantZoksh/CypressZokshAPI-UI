@@ -43,6 +43,6 @@ export const getDateIssuedOn = () => cy.get('input[placeholder="dd/mm/yyyy"]').e
 export const getDatePaymentDueBy = () => cy.get('input[placeholder="dd/mm/yyyy"]').eq(1);
 
 //Object from Read Invoice
-export const getInvoiceNum = () => cy.get('div.invoice-view__identifiers__values.MuiBox-root.css-dvrkiq').eq(0);
+export const getInvoiceNum = () => cy.get('div.invoice-view__identifiers__values.MuiBox-root.css-14td103').eq(0);
 export const getIssuedOnDate = () => cy.get('div.invoice-view__identifiers__values.MuiBox-root.css-dvrkiq').eq(1);
 export const getPaymentDueDate = () => cy.get('div.invoice-view__identifiers__values.MuiBox-root.css-dvrkiq').eq(2);

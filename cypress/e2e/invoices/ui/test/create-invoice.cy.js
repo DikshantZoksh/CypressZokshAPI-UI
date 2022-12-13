@@ -24,6 +24,8 @@ import {
   getPaymentDueDate,
 } from '../../../../support/object-repo';
 
+let  invoiceNumber = 0;
+
 describe('Invoice Creation', () => {
   before(() => {
     loginDashboard();
@@ -48,18 +50,16 @@ describe('Invoice Creation', () => {
       getClientName();
       getInvoiceStatus();
       getInvoiceAmount();
-
+      //invoiceNumber = cy.get('@invoiceNumber')
       cy.get('@invoiceClientName').then((clientName) => {
         cy.get('@customerEmailAddress').then((emailAddress) => {
           expect(clientName).to.contains(emailAddress);
           viewLastCreatedInvoice();
         });
       });
+      cy.get('@invoiceNumber').then((invoicenumber) => {
+        getInvoiceNum().should('have.text',invoicenumber)
+      });
     }
   });
-
-  // it('Invoice validation ', () => {
-  //   cy.url().should('include', '/read');
-  //   // getInvoiceNum().should('have.text', invoiceNumber);
-  // });
 });
