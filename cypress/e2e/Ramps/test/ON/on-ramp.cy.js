@@ -4,14 +4,6 @@ import {
   validateCurrandSymbol
 } from '../../function/ramp';
 
-import {
-  btnFiatCurrency,
-  inputSelectCurrency,
-  currencysign,
-  getIssuedOnDate,
-  getPaymentDueDate,
-} from '../../../../support/object-repo';
-
 describe('Ramp On aggregator validation', () => {
   before(() => {
     cy.visit('https://pay.testnet.zoksh.com/ramps');
@@ -34,7 +26,25 @@ describe('Ramp On aggregator validation', () => {
     validateCurrandSymbol('PLN','zł')
     //Select fiat as NOK
     validateCurrandSymbol('NOK','kr')
-    
+    //Select fiat as DKK
+    validateCurrandSymbol('DKK','kr.')
+    //Select fiat as NZD
+    validateCurrandSymbol('NZD','$')
+    //Select fiat as NOK
+    validateCurrandSymbol('MXN','$')
+    //Select fiat as CAD
+    validateCurrandSymbol('CAD','CA$')
+    //Select fiat as AUD
+    validateCurrandSymbol('AUD','AU$')
+    //Select fiat as BRL
+    validateCurrandSymbol('BRL','R$')
+    //Select fiat as AUD
+    validateCurrandSymbol('AUD','AU$')
+    //Select fiat as AUD
+    validateCurrandSymbol('AUD','AU$')
+    //Select fiat as CLP
+    validateCurrandSymbol('CLP','CLP$')
+
   });
 
 });
