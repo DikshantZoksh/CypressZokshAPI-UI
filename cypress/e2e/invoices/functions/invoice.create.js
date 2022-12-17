@@ -63,9 +63,7 @@ export function checkIfPayeeExist() {
 // Login to the DashBoard
 export function loginDashboard() {
   const { app_url, username, password } = credentials;
-
   cy.visit(app_url);
-
   getEmailLogin().type(username).should('have.value', username);
   getPasswordLogin().type(password).should('have.value', password);
   getButtonLogin().click();

@@ -24,7 +24,7 @@ import {
   getPaymentDueDate,
 } from '../../../../support/object-repo';
 
-describe('Invoice Creation', () => {
+describe('Invoice creation and cancellation', () => {
   before(() => {
     loginDashboard();
   });
@@ -48,6 +48,7 @@ describe('Invoice Creation', () => {
         cy.get('@customerEmailAddress').then((emailAddress) => {
           expect(clientName).to.contains(emailAddress);
           viewLastCreatedInvoice();
+          cy.wait(2000)
         });
       });
       cy.get('@invoiceNumber').then((invoicenumber) => {
