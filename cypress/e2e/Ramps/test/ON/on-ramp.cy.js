@@ -1,7 +1,8 @@
 /// <reference types = "Cypress" />
 
 import {
-  validateCurrandSymbol
+  validateCurrandSymbol,
+  SelectToken
 } from '../../function/ramp';
 
 describe('Ramp On aggregator validation', () => {
@@ -46,5 +47,16 @@ describe('Ramp On aggregator validation', () => {
     validateCurrandSymbol('CLP','CLP$')
 
   });
+
+  it('Select token', () => {
+
+  validateCurrandSymbol('EUR','€')
+  SelectToken('ETH')
+
+
+  });
+
+
+
 
 });

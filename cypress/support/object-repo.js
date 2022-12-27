@@ -52,3 +52,5 @@ export const btnFiatCurrency = () => cy.get('div.ramp__price__switcher.MuiBox-ro
 export const inputSelectCurrency = () => cy.get('input#outlined-basic');
 export const currencysign = () => cy.get('p.MuiTypography-root.MuiTypography-body1.css-hkyn0c');
 export const firstitemselectcurr = () => cy.get('div.li.li-currency.MuiBox-root.css-5hut7e').eq(0).find('div[role="button"]');
+export const firsttokenselect = () => cy.get('div.li.li-tokens.MuiBox-root.css-5hut7e').eq(0).find('div[role="button"]');
+export const dropCryptoCurrency = () => cy.get('div.ramp__price__switcher.MuiBox-root.css-0').find('button').eq(1);
