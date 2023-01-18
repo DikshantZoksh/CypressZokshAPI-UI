@@ -1,5 +1,6 @@
 /// <reference types = "Cypress" />
 
+const walletinfo = require('..//test-data/walletinfo.test-data');
 
 import {
   btnFiatCurrency,
@@ -7,7 +8,10 @@ import {
   firstitemselectcurr,
   currencysign,
   dropCryptoCurrency,
-  firsttokenselect
+  firsttokenselect,
+  YourName,
+  Email,
+  wallet
 } from '../../../support/object-repo';
 
 // Validate Currency and symbol
@@ -27,3 +31,16 @@ export function SelectToken( tok,symb) {
   cy.wait(2000)
 }
 
+// Click token button
+export function ClickButton(btn) {
+  cy.get('button').contains(btn).click({force:true});
+  cy.wait(2000)
+}
+
+//Enter wallet info
+export function Enterwalletinfo() {
+  YourName().type(walletinfo.name).should('have.value',walletinfo.name)
+  Email().type(walletinfo.email).should('have.value',walletinfo.email)
+  wallet().type(walletinfo.wallet).should('have.value',walletinfo.wallet)
+  cy.wait(2000)
+} 
