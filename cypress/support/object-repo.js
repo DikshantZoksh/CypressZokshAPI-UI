@@ -26,7 +26,7 @@ export const getFirstNameField = () => cy.get("input[name='name']");
 export const getButtonSubmit = () => cy.get('button').contains('Submit');
 export const getButtonUpdate = () => cy.get('button').contains('Update');
 export const getAddressInput = () => cy.get('input[name="address.0"]');
-export const getCurrencyDropdown = () => cy.get('div.MuiBox-root.css-i3pbo').find("button[tabindex='0']");
+export const getCurrencyDropdown = () => cy.get('div.MuiBox-root.css-l0oxgq').find("button[tabindex='0']");
 export const getDescriptioninput = () => cy.get('input[name="invoiceInclusions.0.description"]');
 export const getQuantity = () => cy.get('input[name="invoiceInclusions.0.quantity"]');
 export const getUnitPrice = () => cy.get('input[name="invoiceInclusions.0.unitPrice.value"]');
